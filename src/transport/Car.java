@@ -1,5 +1,7 @@
 package transport;
 
+import java.util.Objects;
+
 public class Car extends Transport implements Competing {
     public final float SPEED = 240;
 
@@ -14,31 +16,34 @@ public class Car extends Transport implements Competing {
         VAN("Фургон"),
         MINIVAN("Минивэн");
 
-        private final String russianName;
+        private final String bodyType;
 
-        BodyType(String russianName) {
-            this.russianName = russianName;
+        BodyType(String bodyType) {
+            this.bodyType = bodyType;
         }
 
         @Override
         public String toString() {
-            return String.format("Тип кузова: %s%n", russianName);
+            return String.format("Тип кузова: %s%n", bodyType);
         }
     }
 
     private final BodyType[] bodyTypes = new BodyType[0];
 
     // constructors                                     --------------------------------------------*********
-    public Car(String brand, String model, String bodyType) {
-        this(brand, model, 1.5f, bodyType);
+    public Car(String brand, String model) {
+        this(brand, model, 1.5f, null);
     }
 
-    public Car(String brand, float engineVolume, String bodyType) {
+    public Car(String brand, float engineVolume, BodyType bodyType) {
         this(brand, "No model", engineVolume, bodyType);
     }
 
-    public Car(String brand, String model, float engineVolume, String bodyType) {
-        super(brand, model, engineVolume, bodyType);
+    public Car(String brand, String model, float engineVolume) {
+        super(brand, model, engineVolume, null);
+    }
+    public Car(String brand, String model, float engineVolume, BodyType bodyType) {
+        super(brand, model, engineVolume, String.valueOf(bodyType));
     }
 
     // functional methods                                          --------------------------------------------*********
@@ -50,6 +55,15 @@ public class Car extends Transport implements Competing {
     @Override
     public void finishMoving() {
         System.out.printf("%s %s from %s class is stopping%n", getBrand(), getModel(), getClass().getSimpleName());
+    }
+
+    @Override
+    public void printType() {
+        if (!Objects.equals(getBodyType(), "null")) {
+            System.out.printf("%s %s [%s] has %s", getBrand(), getModel(), getClass().getSimpleName(), getBodyType());
+        } else {
+            System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n", getBrand(), getModel(), getClass().getSimpleName());
+        }
     }
 
     @Override
@@ -72,13 +86,13 @@ public class Car extends Transport implements Competing {
     public String[] getBodyTypes() {
         String[] types = new String[BodyType.values().length];
         for (int i = 0; i < types.length; i++) {
-            types[i] = BodyType.values()[i].russianName;
+            types[i] = BodyType.values()[i].bodyType;
         }
         return types;
     }
 
     @Override
     public String toString() {
-        return  super.toString() + BodyType.valueOf(bodyType);
+        return  super.toString();
     }
 }

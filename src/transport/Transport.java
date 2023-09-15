@@ -3,35 +3,39 @@ package transport;
 import java.util.Random;
 
 public abstract class Transport {
-//    private Transport[] transports;
-    private int count = 0; // счетчик количества добавленных элементов
+    //    private Transport[] transports;
+    private final int count = 0; // счетчик количества добавленных элементов
     protected String brand;     // марка
     protected String model;     // модель
     protected float engineVolume;
-    protected final String bodyType;
+
+    protected String bodyType;
+
     private final int bestLap = new Random().nextInt(3);
     // constructors                                     --------------------------------------------*********
-
     public Transport(String bodyType) {
-        this("Toyota", "GR Supra", 1.99f, bodyType);
+        this("No name", "No model", 0f, null);
     }
 
     public Transport(String brand, String model, float engineVolume, String bodyType) {
-        this.bodyType = bodyType;
+        setBodyType(bodyType);
         setBrand(brand);
         setModel(model);
         setEngineVolume(engineVolume);
     }
 
     // abstract methods                                 --------------------------------------------*********
+
     public abstract void startMoving();
     public abstract void finishMoving();
 
+    public abstract void printType();
+
     // getters and setters                              --------------------------------------------*********
+
     public String getBrand() {
         return brand;
     }
-
     protected void setBrand(String brand) {
         this.brand = brand != null && !brand.isBlank() ? brand : "No brand";
     }
@@ -56,6 +60,11 @@ public abstract class Transport {
         return bodyType;
     }
 
+    public void setBodyType(String bodyType) {
+        this.bodyType = bodyType != null ? bodyType : "null";
+    }
+
+
     //    public void addTransport(Transport transport) {
 //        if (count < transports.length) {
 //            transports[count] = transport;
@@ -69,11 +78,13 @@ public abstract class Transport {
     @Override
     public String toString() {
         return String.format("Type: %s%n" +
-                "Brand: %s%n" +
-                "Model: %s%n" +
-                "Engine volume: %s%n",
+                        "Brand: %s%n" +
+                        "Model: %s%n" +
+                        "Engine volume: %s%n" +
+                "Body type: %s",
                 getClass().getSimpleName(),
                 getBrand(), getModel(),
-              getEngineVolume());
+                getEngineVolume(),
+                getBodyType());
     }
 }

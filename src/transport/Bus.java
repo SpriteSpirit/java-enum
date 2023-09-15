@@ -1,5 +1,7 @@
 package transport;
 
+import java.util.Objects;
+
 public class Bus extends Transport implements Competing{
     public final float SPEED = 180;
 
@@ -12,9 +14,18 @@ public class Bus extends Transport implements Competing{
 
         private final int lowerLimit;
         private final int upperLimit;
+
         CapacityTypes(int lowerLimit, int upperLimit) {
             this.lowerLimit = lowerLimit;
             this.upperLimit = upperLimit;
+        }
+
+        public int getLowerLimit() {
+            return lowerLimit;
+        }
+
+        public int getUpperLimit() {
+            return upperLimit;
         }
 
         @Override
@@ -25,15 +36,20 @@ public class Bus extends Transport implements Competing{
         }
     }
     // constructors                                     --------------------------------------------*********
-   public Bus(String brand, String model, String bodyType) {
-       this(brand, model, 1.5f, bodyType);
+   public Bus(String brand, String model) {
+       this(brand, model, 1.5f, null);
    }
-    public Bus(String brand, float engineVolume, String bodyType) {
+
+    public Bus(String brand, float engineVolume, CapacityTypes bodyType) {
         this(brand, "No model", engineVolume, bodyType);
     }
 
-    public Bus(String brand, String model, float engineVolume,String bodyType) {
-        super(brand, model, engineVolume, bodyType);
+    public Bus(String brand, String model, float engineVolume) {
+        super(brand, model, engineVolume, null);
+    }
+
+    public Bus(String brand, String model, float engineVolume, CapacityTypes bodyType) {
+        super(brand, model, engineVolume, String.valueOf(bodyType));
     }
 
     // functional methods                                          --------------------------------------------*********
@@ -45,6 +61,15 @@ public class Bus extends Transport implements Competing{
     @Override
     public void finishMoving() {
         System.out.printf("%s %s from %s class is stopping%n", getBrand(), getModel(), getClass().getSimpleName());
+    }
+
+    @Override
+    public void printType() {
+        if (!Objects.equals(getBodyType(), "null")) {
+            System.out.printf("%s %s [%s] has %s", getBrand(), getModel(), getClass().getSimpleName(), getBodyType());
+        } else {
+            System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n", getBrand(), getModel(), getClass().getSimpleName());
+        }
     }
 
     @Override
@@ -72,9 +97,9 @@ public class Bus extends Transport implements Competing{
         }
         return types;
     }
+
     @Override
     public String toString() {
-        return  super.toString() + CapacityTypes.valueOf(bodyType);
+        return super.toString();
     }
-
 }

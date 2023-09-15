@@ -14,40 +14,40 @@ public class Main {
         System.out.println("▶ TASK 1 ◀");
 
         // 1 car object
-        Car josse = new Car("Jösse", "Car Indigo 3000", 1.8f, Car.BodyType.SEDAN.name());
+        Car josse = new Car("Jösse", "Car Indigo 3000", 1.8f, Car.BodyType.SEDAN);
 
         // 2 car object
-        Car ferrari = new Car("Ferrari", "166", 2f, Car.BodyType.COUPE.name());
+        Car ferrari = new Car("Ferrari", "166", 2f, Car.BodyType.COUPE);
 
         // 3 car object
-        Car lamborghini = new Car("Lamborghini", "P400", 2.2f, Car.BodyType.PICKUP.name());
+        Car lamborghini = new Car("Lamborghini", "P400", 2.2f, Car.BodyType.PICKUP);
 
         // 4 car object
-        Car toyota = new Car("Toyota", "Supra", 2.8f, Car.BodyType.CROSSOVER.name());
+        Car toyota = new Car("Toyota", "Supra", 2.8f);
 
         // 1 bus object
-        Bus maz = new Bus("MAZ","203",8.8f, Bus.CapacityTypes.BIG.name());
+        Bus maz = new Bus("MAZ", "203", 8.8f);
 
         // 2 bus object
-        Bus paz = new Bus("PAZ", "4230-01", 9.7f, Bus.CapacityTypes.ESPECIALLY_BIG.name());
+        Bus paz = new Bus("PAZ", "4230-01", 9.7f, Bus.CapacityTypes.ESPECIALLY_BIG);
 
         // 3 bus object
-        Bus temsa = new Bus("Temsa", "Opalin 9", 8.6f, Bus.CapacityTypes.ESPECIALLY_SMALL.name());
+        Bus temsa = new Bus("Temsa", "Opalin 9", 8.6f, Bus.CapacityTypes.ESPECIALLY_SMALL);
 
         // 4 bus object
-        Bus ikarus = new Bus("Ikarus", "263", 9.9f, Bus.CapacityTypes.ESPECIALLY_SMALL.name());
+        Bus ikarus = new Bus("Ikarus", "263", 9.9f, Bus.CapacityTypes.MIDDLE);
 
         // 1 truck object
-        Truck sollers = new Truck("Sollers", "Argo", 2f, Truck.TruckPayloadType.N1.name());
+        Truck sollers = new Truck("Sollers", "Argo", 2f, Truck.TruckPayloadType.N1);
 
         // 2 truck object
-        Truck volvo = new Truck("Volvo", "FL7", 7.2f, Truck.TruckPayloadType.N1.name());
+        Truck volvo = new Truck("Volvo", "FL7", 7.2f, Truck.TruckPayloadType.N2);
 
         // 3 truck object
-        Truck jac = new Truck("Jac", "N25/35", 1.9f, Truck.TruckPayloadType.N2.name());
+        Truck jac = new Truck("Jac", "N25/35", 1.9f, Truck.TruckPayloadType.N3);
 
         // 4 truck object
-        Truck gaz = new Truck("GAZ", "Vepr Next", 4.4f, Truck.TruckPayloadType.N3.name());
+        Truck gaz = new Truck("GAZ", "Vepr Next", 4.4f);
 
         Transport[] transportList = new Transport[]{josse, ferrari, lamborghini, toyota, maz, paz, temsa, ikarus, sollers, volvo, jac, gaz};
 
@@ -64,6 +64,7 @@ public class Main {
         for (Transport transport : transportList) {
             System.out.println(transport);
         }
+        separator(" ", 1);
 
         // DRIVERS
         Driver<Car> bob = new DriverB("Bob Dilan", true, 3f, ferrari);
@@ -81,6 +82,18 @@ public class Main {
 //        for (Car.BodyType bodyType : Car.BodyType.values()) {
 //            System.out.println(bodyType);
 //        }
+
+        separator(" ", 1);
+
+        maz.printType();
+        toyota.printType();
+        gaz.printType();
+
+        separator(" ", 1);
+
+        ikarus.printType();
+        ferrari.printType();
+        jac.printType();
     }
 
     public static void getStats(Competing... transports) {
