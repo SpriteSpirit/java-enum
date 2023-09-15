@@ -12,13 +12,13 @@ public abstract class Transport {
     protected String bodyType;
 
     private final int bestLap = new Random().nextInt(3);
+
     // constructors                                     --------------------------------------------*********
     public Transport(String bodyType) {
-        this("No name", "No model", 0f, null);
+        this("No name", "No model", 0f);
     }
 
-    public Transport(String brand, String model, float engineVolume, String bodyType) {
-        setBodyType(bodyType);
+    public Transport(String brand, String model, float engineVolume) {
         setBrand(brand);
         setModel(model);
         setEngineVolume(engineVolume);
@@ -27,6 +27,7 @@ public abstract class Transport {
     // abstract methods                                 --------------------------------------------*********
 
     public abstract void startMoving();
+
     public abstract void finishMoving();
 
     public abstract void printType();
@@ -36,6 +37,7 @@ public abstract class Transport {
     public String getBrand() {
         return brand;
     }
+
     protected void setBrand(String brand) {
         this.brand = brand != null && !brand.isBlank() ? brand : "No brand";
     }
@@ -56,14 +58,6 @@ public abstract class Transport {
         this.engineVolume = engineVolume > 0 ? engineVolume : (engineVolume == 0 ? 1.5f : Math.abs(engineVolume));
     }
 
-    public String getBodyType() {
-        return bodyType;
-    }
-
-    public void setBodyType(String bodyType) {
-        this.bodyType = bodyType != null ? bodyType : "null";
-    }
-
 
     //    public void addTransport(Transport transport) {
 //        if (count < transports.length) {
@@ -80,11 +74,9 @@ public abstract class Transport {
         return String.format("Type: %s%n" +
                         "Brand: %s%n" +
                         "Model: %s%n" +
-                        "Engine volume: %s%n" +
-                "Body type: %s",
+                        "Engine volume: %s%n",
                 getClass().getSimpleName(),
                 getBrand(), getModel(),
-                getEngineVolume(),
-                getBodyType());
+                getEngineVolume());
     }
 }

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Car extends Transport implements Competing {
     public final float SPEED = 240;
+    private BodyType bodyType;
 
     public enum BodyType {
         SEDAN("Седан"),
@@ -31,19 +32,20 @@ public class Car extends Transport implements Competing {
     private final BodyType[] bodyTypes = new BodyType[0];
 
     // constructors                                     --------------------------------------------*********
+    public Car(String brand, String model, float engineVolume) {
+        super(brand, model, engineVolume);
+    }
+
+    public Car(String brand, String model, float engineVolume, BodyType bodyType) {
+        super(brand, model, engineVolume);
+        this.bodyType = bodyType;
+    }
+
     public Car(String brand, String model) {
         this(brand, model, 1.5f, null);
     }
-
     public Car(String brand, float engineVolume, BodyType bodyType) {
         this(brand, "No model", engineVolume, bodyType);
-    }
-
-    public Car(String brand, String model, float engineVolume) {
-        super(brand, model, engineVolume, null);
-    }
-    public Car(String brand, String model, float engineVolume, BodyType bodyType) {
-        super(brand, model, engineVolume, String.valueOf(bodyType));
     }
 
     // functional methods                                          --------------------------------------------*********
@@ -57,9 +59,13 @@ public class Car extends Transport implements Competing {
         System.out.printf("%s %s from %s class is stopping%n", getBrand(), getModel(), getClass().getSimpleName());
     }
 
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
     @Override
     public void printType() {
-        if (!Objects.equals(getBodyType(), "null")) {
+        if (getBodyType() != null) {
             System.out.printf("%s %s [%s] has %s", getBrand(), getModel(), getClass().getSimpleName(), getBodyType());
         } else {
             System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n", getBrand(), getModel(), getClass().getSimpleName());

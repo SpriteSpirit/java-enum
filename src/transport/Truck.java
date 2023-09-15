@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Truck extends Transport implements Competing {
     public final float SPEED = 200;
+    private TruckPayloadType bodyType;
 
     public enum TruckPayloadType {
         N1(0f, 3.5f),
@@ -27,25 +28,24 @@ public class Truck extends Transport implements Competing {
 
         @Override
         public String toString() {
-            return  "Грузоподъемность: " + (lowerLimit != null ? String.format("%.1f т. - ", lowerLimit) : "None") +
+            return "Грузоподъемность: " +
+                    (lowerLimit != null ? String.format("%.1f т. - ", lowerLimit) : "None") +
                     (upperLimit != null ? String.format("%.2f т.%n", upperLimit) : "");
         }
     }
 
     // constructors                                     --------------------------------------------*********
-    public Truck(String brand, String model, float engineVolume) {
-        this(brand, model, engineVolume, null);
+    public Truck(String brand, String model, float engineVolume, TruckPayloadType bodyType) {
+        this(brand, model, engineVolume);
+        this.bodyType = bodyType;
     }
+
     public Truck(String brand, String model) {
         this(brand, model, 1.5f, null);
     }
 
-    public Truck(String brand, float engineVolume, TruckPayloadType bodyType) {
-        this(brand, "No model", engineVolume, bodyType);
-    }
-
-    public Truck(String brand, String model, float engineVolume, TruckPayloadType bodyType) {
-        super(brand, model, engineVolume, String.valueOf(bodyType));
+    public Truck(String brand, String model, float engineVolume) {
+        super(brand, model, engineVolume);
     }
 
     // functional methods                                          --------------------------------------------*********
@@ -59,12 +59,21 @@ public class Truck extends Transport implements Competing {
         System.out.printf("%s %s from %s class is stopping%n", getBrand(), getModel(), getClass().getSimpleName());
     }
 
+    public TruckPayloadType getBodyType() {
+        return bodyType;
+    }
+
     @Override
     public void printType() {
-        if (!Objects.equals(getBodyType(), "null")) {
-            System.out.printf("%s %s [%s] has %s", getBrand(), getModel(), getClass().getSimpleName(), getBodyType());
+        if (getBodyType() != null) {
+            System.out.printf("%s %s [%s] has %s",
+                    getBrand(), getModel(),
+                    getClass().getSimpleName(),
+                    getBodyType());
         } else {
-            System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n", getBrand(), getModel(), getClass().getSimpleName());
+            System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n",
+                    getBrand(), getModel(),
+                    getClass().getSimpleName());
         }
     }
 

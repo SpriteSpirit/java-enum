@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Bus extends Transport implements Competing{
     public final float SPEED = 180;
-
+    private CapacityTypes bodyType;
     public enum CapacityTypes {
         ESPECIALLY_SMALL(0, 10),
         SMALL(10, 25),
@@ -36,20 +36,21 @@ public class Bus extends Transport implements Competing{
         }
     }
     // constructors                                     --------------------------------------------*********
+    public Bus(String brand, String model, float engineVolume) {
+        super(brand, model, engineVolume);
+    }
+
+    public Bus(String brand, String model, float engineVolume, CapacityTypes bodyType) {
+        super(brand, model, engineVolume);
+        this.bodyType = bodyType;
+    }
+
    public Bus(String brand, String model) {
        this(brand, model, 1.5f, null);
    }
 
     public Bus(String brand, float engineVolume, CapacityTypes bodyType) {
         this(brand, "No model", engineVolume, bodyType);
-    }
-
-    public Bus(String brand, String model, float engineVolume) {
-        super(brand, model, engineVolume, null);
-    }
-
-    public Bus(String brand, String model, float engineVolume, CapacityTypes bodyType) {
-        super(brand, model, engineVolume, String.valueOf(bodyType));
     }
 
     // functional methods                                          --------------------------------------------*********
@@ -63,9 +64,13 @@ public class Bus extends Transport implements Competing{
         System.out.printf("%s %s from %s class is stopping%n", getBrand(), getModel(), getClass().getSimpleName());
     }
 
+    public CapacityTypes getBodyType() {
+        return bodyType;
+    }
+
     @Override
     public void printType() {
-        if (!Objects.equals(getBodyType(), "null")) {
+        if (getBodyType() != null) {
             System.out.printf("%s %s [%s] has %s", getBrand(), getModel(), getClass().getSimpleName(), getBodyType());
         } else {
             System.out.printf("%s %s [%s] has 'Данных по транспортному средству недостаточно'%n", getBrand(), getModel(), getClass().getSimpleName());
